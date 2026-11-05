@@ -1,0 +1,40 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Libro } from '../models/libro.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LibroService {
+
+  private apiUrl = '/api/libros';
+
+  constructor(private http: HttpClient) {}
+
+  // Listar libros
+  getLibros(): Observable<Libro[]> {
+    return this.http.get<Libro[]>(this.apiUrl);
+  }
+
+  // Registrar libro
+  createLibro(libro: Libro): Observable<Libro> {
+    return this.http.post<Libro>(this.apiUrl, libro);
+  }
+
+  // Consultar libro por ID
+  getLibro(id: string): Observable<Libro> {
+    return this.http.get<Libro>(`${this.apiUrl}/${id}`);
+  }
+
+  // Actualizar libro
+  updateLibro(id: string, libro: Libro): Observable<Libro> {
+    return this.http.put<Libro>(`${this.apiUrl}/${id}`, libro);
+  }
+
+  // Eliminar libro
+  deleteLibro(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+}
+
